@@ -95,6 +95,7 @@ if __name__ == '__main__':
     
     print("Found %i ops" % len(found_ops))
     found_features = extract_info_of_ops(found_ops, root)
+    found_features = sorted(found_features)
 
     results = defaultdict(list)
     for cpuid, op in found_features:
