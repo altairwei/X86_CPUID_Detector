@@ -1,6 +1,6 @@
 ## Note
 
-There is no way to distinguish AVX2 and AVX-512, so `x86cpuid` does not show it by default. 
+There is no way to distinguish AVX2 and AVX-512, so `binx86cpuid` does not show it by default. 
 
 ## Reference
 

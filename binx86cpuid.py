@@ -51,6 +51,8 @@ if __name__ == '__main__':
         required=False, help="xml file containing intel instructions.")
     parser.add_argument("-d", "--show-details", action="store_true", required=False, 
         default = False, help="Show instructions of CPUID in output.")
+    parser.add_argument("-i", "--list-instructions", required=False, 
+        default=None, help="List instructions of a given CPUID in output.")
     parser.add_argument("-b", "--include-base", action="store_true", required=False, 
         help="Include base instructions in the search.")
     parser.add_argument("-l", "--lookup-op", action="store_true", required=False, 
@@ -94,14 +96,18 @@ if __name__ == '__main__':
     print("Found %i ops" % len(found_ops))
     found_features = extract_info_of_ops(found_ops, root)
 
-    foo = defaultdict(list)
+    results = defaultdict(list)
     for cpuid, op in found_features:
-        foo[cpuid].append(op)
-    for cpuid in foo:
+        results[cpuid].append(op)
+    for cpuid in results:
         avx512 = re.compile("AVX-512.*")
         if (avx512.match(cpuid)):
             continue
         print("- %s" % cpuid)
         if (args.show_details):
-            for op in foo[cpuid]:
+            for op in results[cpuid]:
                 print("\t- %s" % op)
+        elif (args.list_instructions != None):
+            if (args.list_instructions.upper() == cpuid):
+                for op in results[cpuid]:
+                    print("\t- %s" % op)
